@@ -1,14 +1,19 @@
 import os
 
+from dotenv import load_dotenv
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
+from pdfminer.high_level import extract_text
+from langchain.docstore.document import Document
 
+load_dotenv()
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, "books", "odyssey.txt")
+file_path = os.path.join(current_dir, "books", "iphone_user_guide.pdf")
 persistent_directory = os.path.join(current_dir, "db", "chroma_db")
+pdf_text = extract_text(file_path)
 
 # Check if the Chroma vector store already exists
 if not os.path.exists(persistent_directory):
@@ -20,13 +25,16 @@ if not os.path.exists(persistent_directory):
             f"The file {file_path} does not exist. Please check the path."
         )
 
+    temp_text_file = os.path.join(current_dir, "temp_text.txt")
+    with open(temp_text_file, 'w', encoding='utf-8', errors='ignore') as f:
+        f.write(pdf_text)
     # Read the text content from the file
-    loader = TextLoader(file_path)
-    documents = loader.load()
-
+    # loader = TextLoader(file_path)
+    # documents = loader.load()
+    documents = Document(page_content=pdf_text)
     # Split the document into chunks
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-    docs = text_splitter.split_documents(documents)
+    docs = text_splitter.split_documents([documents])
 
     # Display information about the split documents
     print("\n--- Document Chunks Information ---")

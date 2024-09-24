@@ -8,7 +8,7 @@ from langchain_openai import ChatOpenAI
 load_dotenv()
 
 # Create a ChatOpenAI model
-model = ChatOpenAI(model="gpt-4o")
+model = ChatOpenAI(model="gpt-4o-mini")
 
 # Define prompt templates for different feedback types
 positive_feedback_template = ChatPromptTemplate.from_messages(
@@ -85,7 +85,7 @@ chain = classification_chain | branches
 # Neutral review - "The product is okay. It works as expected but nothing exceptional."
 # Default - "I'm not sure about the product yet. Can you tell me more about its features and benefits?"
 
-review = "The product is terrible. It broke after just one use and the quality is very poor."
+review = "The product is okay. It works as expected but nothing exceptional."
 result = chain.invoke({"feedback": review})
 
 # Output the result

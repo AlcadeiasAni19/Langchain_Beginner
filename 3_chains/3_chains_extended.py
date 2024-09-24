@@ -8,7 +8,7 @@ from langchain_openai import ChatOpenAI
 load_dotenv()
 
 # Create a ChatOpenAI model
-model = ChatOpenAI(model="gpt-4o")
+model = ChatOpenAI(model="gpt-4o-mini")
 
 # Define prompt templates
 prompt_template = ChatPromptTemplate.from_messages(
@@ -26,7 +26,7 @@ count_words = RunnableLambda(lambda x: f"Word count: {len(x.split())}\n{x}")
 chain = prompt_template | model | StrOutputParser() | uppercase_output | count_words
 
 # Run the chain
-result = chain.invoke({"topic": "lawyers", "joke_count": 3})
+result = chain.invoke({"topic": "bear", "joke_count": 3})
 
 # Output
 print(result)

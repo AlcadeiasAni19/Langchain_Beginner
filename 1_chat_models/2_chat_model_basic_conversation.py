@@ -6,20 +6,20 @@ from langchain_openai import ChatOpenAI
 load_dotenv()
 
 # Create a ChatOpenAI model
-model = ChatOpenAI(model="gpt-4o")
+model = ChatOpenAI(model="gpt-4o-mini")
 
 # SystemMessage:
 #   Message for priming AI behavior, usually passed in as the first of a sequenc of input messages.
-# HumanMessagse:
+# HumanMessages:
 #   Message from a human to the AI model.
-messages = [
-    SystemMessage(content="Solve the following math problems"),
-    HumanMessage(content="What is 81 divided by 9?"),
-]
-
-# Invoke the model with messages
-result = model.invoke(messages)
-print(f"Answer from AI: {result.content}")
+# messages = [
+#     SystemMessage(content="Solve the following math problems"),
+#     HumanMessage(content="What is 81 divided by 9?"),
+# ]
+#
+# # Invoke the model with messages
+# result = model.invoke(messages)
+# print(f"Answer from AI: {result.content}")
 
 
 # AIMessage:
